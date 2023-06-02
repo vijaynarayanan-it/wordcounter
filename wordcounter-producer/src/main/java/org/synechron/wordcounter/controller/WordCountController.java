@@ -19,16 +19,16 @@ import lombok.RequiredArgsConstructor;
 public class WordCountController {
 	private final WordCountService wordCountService;
 
-	@PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> addWords(@RequestBody String[] words) {
 		wordCountService.addWords(words);
 		return new ResponseEntity<>("Given word is added", HttpStatus.CREATED);
 	}
 
-	@GetMapping("/{word}")
+	@GetMapping(path = "/{word}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Integer> getCountOfTheWord(@PathVariable String word) {
 		int count = wordCountService.getCount(word);
 
-		return (count == 0) ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(count, HttpStatus.FOUND);
+		return (count == 0) ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(count, HttpStatus.OK);
 	}
 }

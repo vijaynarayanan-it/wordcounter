@@ -1,0 +1,39 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 8765
+
+management:
+      endpoint:
+        gateway:
+          enabled: true
+      endpoints:
+        web:
+          exposure:
+            include: "*"
+
+spring:
+  application:
+    name: wordcounter-api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
+      routes:
+        - id: wordcounter-producer
+          uri: lb://wordcounter-producer
+          predicates:
+            - Path=/wordcounter-producer/**
+          filters:
+            - StripPrefix=1
+
+        - id: word-counter-consumer
+          uri: lb://word-counter-consumer
+          predicates:
+            - Path=/word-counter-consumer/**
+          filters:
+            - StripPrefix=1
