@@ -17,3 +17,4 @@ buildNumber.properties
 .classpath
 /mvnw.cmd
 /mvnw
+/.factorypath
