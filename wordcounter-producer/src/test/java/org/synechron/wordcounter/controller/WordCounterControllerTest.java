@@ -63,7 +63,7 @@ public class WordCounterControllerTest {
 
 		mockMvc.perform(get("/api/v1/wordcounter/{word}", "Java")
 				.contentType(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect(status().isFound())
+				.andExpect(status().isOk())
 				.andExpect(MockMvcResultMatchers.content().string("1"))
 				.andDo(print());
 	}

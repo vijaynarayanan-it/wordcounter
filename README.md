@@ -21,12 +21,30 @@ This project helps to understand how we can add and count the words using parall
 - [WordUtils](https://github.com/vijaynarayanan-it/wordcounter/blob/main/src/main/java/org/synechron/wordcounter/utils/WordUtils.java)
 -- This class has static implementations and also mock implementation for Translator API.
 
+## How to run the applications
+
+* There are four applications we need to run one by one.
+
+- **wordcounter-discovery-server**
+  --- This is the micro-service discovery server(Eureka Server) will run on http://localhost:8761/
+
+- **wordcounter-api-gateway-server**
+  --- API Gateway server which also performs Load Balancing for the registered micro-services. This will run on http://localhost:8765/
+
+- **wordcounter-producer**
+  --- Contains the business logic for storing and adding the given word. This service will run on http://localhost:8081/ (Of course we can change the port number while runtime using VM Argument). We need to provide parallel count value using -Dparallel.thread.count VM argument.
+
+- **wordcounter-consumer**
+--- Contains the REST services for connecting to producer service (Using Feign Client Implementation - [WordCounterProducerProxy](https://github.com/vijaynarayanan-it/wordcounter/blob/main/wordcounter-consumer/src/main/java/org/synechron/wordcounter/clientproxy/WordCounterProducerProxy.java)) for performing addition and calculating the word count. This service will run on http://localhost:8082/ (Of course we can change the port number while runtime using VM Arguments)
+
+- The microservice routing logic is defined in [application.yml](https://github.com/vijaynarayanan-it/wordcounter/blob/main/wordcounter-api-gateway-server/src/main/resources/application.yml)
+
 ## To test the test cases use below URLs in your postman application:
 
-- Test case 1: To add a word
+- Test case 1: To add a word (We are connecting to consumer service through spring cloud API Gateway - http://localhost:8765)
 
 ```sh
-http://localhost:8080/api/v1/wordcounter/
+http://localhost:8765/wordcounter-consumer/
 ```
 
 - Sample input:
@@ -39,7 +57,7 @@ http://localhost:8080/api/v1/wordcounter/
 - Test case 2: To get the count of the given word
 
 ```sh
-http://localhost:8080/api/v1/wordcounter/apple
+http://localhost:8765/wordcounter-consumer/apple
 ```
 
 - Sample output:
