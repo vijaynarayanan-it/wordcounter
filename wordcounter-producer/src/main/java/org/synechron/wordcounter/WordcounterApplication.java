@@ -14,7 +14,7 @@ import org.synechron.wordcounter.service.impl.AddAndCountWordService;
 public class WordcounterApplication implements ApplicationRunner {
 	private static final int DEFAULT_PARALLEL_COUNT = Runtime.getRuntime().availableProcessors();
 
-	@Value("${parallel.thread.count}")
+	@Value("${parallel.thread.count:1}")
 	private int parallelThreadCount;
 
 	public static void main(String[] args) {
@@ -23,7 +23,7 @@ public class WordcounterApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		if (parallelThreadCount == 0) {
+		if (parallelThreadCount == 1) {
 			parallelThreadCount = DEFAULT_PARALLEL_COUNT;
 		}
 	}

@@ -5,3 +5,5 @@ eureka:
 spring:
   application:
     name: wordcounter-producer
+server:
+  port: 9092

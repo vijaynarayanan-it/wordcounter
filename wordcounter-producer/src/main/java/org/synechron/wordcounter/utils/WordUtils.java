@@ -1,31 +1,8 @@
 package org.synechron.wordcounter.utils;
 
-import org.synechron.wordcounter.service.impl.AddAndCountWordService;
-
 public final class WordUtils {
 	private WordUtils() {
 		// to avoid object creation
-	}
-
-	public static AddAndCountWordService countWords(String text) {
-		assert (text != null);
-		AddAndCountWordService result = new AddAndCountWordService();
-		int i = 0;
-		while (i < text.length()) {
-			while (i < text.length() && !Character.isAlphabetic(text.charAt(i))) {
-				i++;
-			}
-			int bi = i;
-			while (i < text.length() && Character.isAlphabetic(text.charAt(i))) {
-				i++;
-			}
-			int ei = i;
-			if (bi != ei) {
-				String word = text.substring(bi, ei);
-				result.add(word, 1);
-			}
-		}
-		return result;
 	}
 
 	/**
